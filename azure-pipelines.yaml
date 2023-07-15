@@ -1,0 +1,34 @@
+---
+trigger:
+  - main
+
+pool: 
+  vmImage: ubuntu-22.04
+
+variables:
+  - name: var1
+    value: value1
+  - group: group1
+
+stages:
+  - stage: stage1
+    displayName: 'Stage 1'
+    variables:
+      - name: var2
+        value: value2
+    jobs:
+      - job: job1
+        displayName: Job 1
+        variables:
+          - name: var3
+            value: value3
+        steps:
+          - bash: echo "##vso[task.setvariable variable=var1;]newvalue"
+          - script: "echo $(var1)"
+          - script: "echo $(var2)"
+          - script: "echo $(var3)"
+          - script: "echo java_version $(java_version) password = $(password)"
+            displayName: "Displaying values from group"
+
+
+
